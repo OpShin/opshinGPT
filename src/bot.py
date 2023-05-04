@@ -138,7 +138,7 @@ def run_discord_bot():
         elif client.chat_model == "Bing":
             await client.chatbot.reset()
         await interaction.followup.send("> **INFO: I have forgotten everything.**")
-        personas.current_persona = "standard"
+        personas.current_persona = "opshinGPT"
         logger.warning(
             f"\x1b[31m{client.chat_model} bot has been successfully reset\x1b[0m")
 
@@ -220,7 +220,8 @@ https://github.com/Zero6992/chatGPT-discord-bot""")
         app_commands.Choice(name="DUDE V3", value="dude_v3"),
         app_commands.Choice(name="AIM", value="aim"),
         app_commands.Choice(name="UCAR", value="ucar"),
-        app_commands.Choice(name="Jailbreak", value="jailbreak")
+        app_commands.Choice(name="Jailbreak", value="jailbreak"),
+        app_commands.Choice(name="OpShinGPT", value="opshinGPT")
     ])
     async def switchpersona(interaction: discord.Interaction, persona: app_commands.Choice[str]):
         if interaction.user == client.user:

@@ -66,6 +66,7 @@ class aclient(discord.Client):
         await self.message_queue.put((message, user_message))
 
     async def send_message(self, message, user_message):
+        think_message = await message.reply("Thanks for reaching out! I received your question and will think about this for a bit...")
         if self.is_replying_all == "False":
             author = message.user.id
         else:
@@ -85,6 +86,7 @@ class aclient(discord.Client):
                 response = f"{await responses.bard_handle_response(user_message, self)}{response}"
             elif self.chat_model == "Bing":
                 response = f"{await responses.bing_handle_response(user_message, self)}{response}"
+            await think_message.delete()
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
