@@ -284,7 +284,7 @@ https://github.com/Zero6992/chatGPT-discord-bot""")
             if message.author == client.user:
                 return
             if client.replying_all_discord_channel_id:
-                if message.channel.id == int(client.replying_all_discord_channel_id):
+                if message.channel.parent.id == int(client.replying_all_discord_channel_id):
                     username = str(message.author)
                     user_message = str(message.content)
                     channel = str(message.channel)
