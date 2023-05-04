@@ -78,6 +78,7 @@ class aclient(discord.Client):
             elif self.chat_model == "OFFICIAL":
                 chat_model_status = f'OpenAI ({self.openAI_gpt_engine})'
             response = ""
+            user_message = f"{user_message}. All code must be python code. Smart Contracts must follow the OpShin/Python smart contract format."
             if self.chat_model == "OFFICIAL":
                 response = f"{await responses.official_handle_response(user_message, self)}{response}"
             elif self.chat_model == "UNOFFICIAL":

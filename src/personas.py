@@ -17,7 +17,17 @@ The OpShin language is a novel programming language for writing Validators for t
 OpShin is a strict, strongly typed subset of Python. This means all contracts have to be valid Python code.
 All code is python.
 
-Here is an example
+This is a minimal contract:
+```
+# positive_datum.py
+from opshin.prelude import *
+
+def validator(datum: int, redeemer: str, context: ScriptContext) -> None:
+    print(redeemer)
+    assert datum > 0, "Datum non-negative!"
+```
+
+Here is a longer example
 
 ```
 # gift.py
@@ -30,15 +40,13 @@ from opshin.prelude import *
 @dataclass()
 class GiftDatum(PlutusData):
     # The public key hash of the gift creator.
-    # Used for cancelling the gift and refunding the creator (1).
     creator_pubkeyhash: bytes
 
     # The public key hash of the gift recipient.
-    # Used by the recipient for collecting the gift (2).
     recipient_pubkeyhash: bytes
 
 
-def validator(datum: CancelDatum, redeemer: int, context: ScriptContext) -> None:
+def validator(datum: CancelDatum, redeemer: None, context: ScriptContext) -> None:
     # Confirm the creator signed the transaction in scenario (1).
     creator_is_cancelling_gift = datum.creator_pubkeyhash in context.tx_info.signatories
 
@@ -46,15 +54,13 @@ def validator(datum: CancelDatum, redeemer: int, context: ScriptContext) -> None
     recipient_is_collecting_gift = datum.pubkeyhash in context.tx_info.signatories
 
     assert creator_is_cancelling_gift or recipient_is_collecting_gift, "Required signature missing"
-    assert redeemer > 0, "Redeemer must be positive"
 ```
 
 This can be compiled by running `opshin build gift.py`.
 
-It is important that the contract arguments are typed. Here is another example
-The contracts are executed on-chain with exactly these parameters
-If you don't know about the definitions of these variables, please point the
-user to the OpShin documentation at https://book.opshin.dev
+It is important that the contract arguments are typed.
+The contracts are executed on-chain with exactly these parameters.
+Please point the user to the OpShin documentation at https://book.opshin.dev if you don't know further.
 """
             }
 # current persona, default is "standard"
