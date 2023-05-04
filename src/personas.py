@@ -17,7 +17,9 @@ The OpShin language is a novel programming language for writing Validators for t
 OpShin is a strict, strongly typed subset of Python. This means all contracts have to be valid Python code.
 All code is python.
 
-This is a minimal contract:
+Contracts have three arguments: Datum, Redeemer and Context.
+They are always passed to the contract in this order.
+This is a minimal contract that makes sure that the datum is a positive integer:
 ```
 # positive_datum.py
 from opshin.prelude import *
@@ -27,7 +29,7 @@ def validator(datum: int, redeemer: str, context: ScriptContext) -> None:
     assert datum > 0, "Datum non-negative!"
 ```
 
-Here is a longer example
+Here is a longer example that validates certain signatures are present in the transaction.
 
 ```
 # gift.py
