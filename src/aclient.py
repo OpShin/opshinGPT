@@ -73,18 +73,18 @@ class aclient(discord.Client):
         try:
             chat_model_status = self.chat_model
             if self.chat_model == "UNOFFICIAL":
-                chat_model_status = f'ChatGPT {self.openAI_gpt_engine}'
+                chat_model_status = f'ChatGPT ({self.openAI_gpt_engine})'
             elif self.chat_model == "OFFICIAL":
-                chat_model_status = f'OpenAI {self.openAI_gpt_engine}'
-            response = (f'> **{user_message}** - <@{str(author)}> ({chat_model_status}) \n\n')
+                chat_model_status = f'OpenAI ({self.openAI_gpt_engine})'
+            response = f"\n> Powered by {chat_model_status}"
             if self.chat_model == "OFFICIAL":
-                response = f"{response}{await responses.official_handle_response(user_message, self)}"
+                response = f"{await responses.official_handle_response(user_message, self)}{response}"
             elif self.chat_model == "UNOFFICIAL":
-                response = f"{response}{await responses.unofficial_handle_response(user_message, self)}"
+                response = f"{await responses.unofficial_handle_response(user_message, self)}{response}"
             elif self.chat_model == "Bard":
-                response = f"{response}{await responses.bard_handle_response(user_message, self)}"
+                response = f"{await responses.bard_handle_response(user_message, self)}{response}"
             elif self.chat_model == "Bing":
-                response = f"{response}{await responses.bing_handle_response(user_message, self)}"
+                response = f"{await responses.bing_handle_response(user_message, self)}{response}"
             char_limit = 1900
             if len(response) > char_limit:
                 # Split the response into smaller chunks of no more than 1900 characters each(Discord limit is 2000 per chunk)
@@ -114,11 +114,11 @@ class aclient(discord.Client):
                                                     for i in range(0, len(formatted_code_block), char_limit)]
                                 for chunk in code_block_chunks:
                                     if self.is_replying_all == "True":
-                                        await message.channel.send(f"```{chunk}```")
+                                        await message.reply(f"```{chunk}```")
                                     else:
                                         await message.followup.send(f"```{chunk}```")
                             elif self.is_replying_all == "True":
-                                await message.channel.send(f"```{formatted_code_block}```")
+                                await message.reply(f"```{formatted_code_block}```")
                             else:
                                 await message.followup.send(f"```{formatted_code_block}```")
                 else:
@@ -126,16 +126,16 @@ class aclient(discord.Client):
                                     for i in range(0, len(response), char_limit)]
                     for chunk in response_chunks:
                         if self.is_replying_all == "True":
-                            await message.channel.send(chunk)
+                            await message.reply(chunk)
                         else:
                             await message.followup.send(chunk)
             elif self.is_replying_all == "True":
-                await message.channel.send(response)
+                await message.reply(response)
             else:
                 await message.followup.send(response)
         except Exception as e:
             if self.is_replying_all == "True":
-                await message.channel.send(f"> **ERROR: Something went wrong, please try again later!** \n ```ERROR MESSAGE: {e}```")
+                await message.reply(f"> **ERROR: Something went wrong, please try again later!** \n ```ERROR MESSAGE: {e}```")
             else:
                 await message.followup.send(f"> **ERROR: Something went wrong, please try again later!** \n ```ERROR MESSAGE: {e}```")
             logger.exception(f"Error while sending message: {e}")
