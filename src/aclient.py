@@ -76,7 +76,7 @@ class aclient(discord.Client):
                 chat_model_status = f'ChatGPT ({self.openAI_gpt_engine})'
             elif self.chat_model == "OFFICIAL":
                 chat_model_status = f'OpenAI ({self.openAI_gpt_engine})'
-            response = f"\n> Powered by {chat_model_status}"
+            response = ""
             if self.chat_model == "OFFICIAL":
                 response = f"{await responses.official_handle_response(user_message, self)}{response}"
             elif self.chat_model == "UNOFFICIAL":
