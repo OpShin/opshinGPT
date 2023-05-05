@@ -1,13 +1,14 @@
-# ChatGPT Discord Bot
+# OpShinGPT Discord Bot
 
-> ### Build your own Discord bot using ChatGPT
+This is a customized version of the ChatGPT discord bot.
+It currently lives on the OpShin Den Discord server.
+Chatting with the bot is currently restricted to Patreon
+supporters and team members, but messages can be read by everyone.
 
----
-> **Warning**
->
-> #### 2023-04-12 Bing now supported
-> #### 2023-04-01 Only Plus account can access Unofficial model
-> #### 2023-03-27 Bard now supported
+Join the server here: https://discord.com/invite/umR3A2g4uw
+
+
+If you want to run the bot yourself, follow these instructions.
 
 ### Chat
 
